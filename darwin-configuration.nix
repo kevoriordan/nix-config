@@ -125,7 +125,7 @@ in {
 
   # Show all filename extensions in Finder
   system.defaults.finder.AppleShowAllExtensions = true;
- # Allow quitting Finder via ⌘ + Q; doing so will also hide desktop icons
+  # Allow quitting Finder via ⌘ + Q; doing so will also hide desktop icons
   system.defaults.finder.QuitMenuItem = true;
   system.defaults.finder.FXEnableExtensionChangeWarning = false;
   # Show full POSIX path in Finder window title
