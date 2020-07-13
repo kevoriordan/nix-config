@@ -6,7 +6,7 @@ let
   erNix = (import (builtins.fetchTarball erNixUrl)).pkgs;
   ghcide = (import (builtins.fetchTarball
     "https://github.com/cachix/ghcide-nix/tarball/master") { });
-  cfg = config.home-manager.users.kevinoriordan;
+  cfg = config.home-manager.users.${username};
   xdgConfigHomeRelativePath = ".config";
   xdgDataHomeRelativePath = ".local/share";
   xdgCacheHomeRelativePath = ".cache";
@@ -19,18 +19,18 @@ in {
   home.packages = with pkgs; [
     erNix.okta-aws-login
     awscli
-    starship  # gives you a nicer zsh prompt
-    bat    # nicer version of cat
+    starship # gives you a nicer zsh prompt
+    bat # nicer version of cat
     black
     broot
     dhall
     dhall-json
-    fzf    # Needed by zsh-interactive-cd plugin
+    fzf # Needed by zsh-interactive-cd plugin
     getopt
     git
     emacs
     nixfmt
-    pinentry_mac   # For yubikey
+    pinentry_mac # For yubikey
     postgresql
     gitAndTools.gh
     kubectx
@@ -47,7 +47,7 @@ in {
     gettext
     go
     nix-prefetch-git
-    oh-my-zsh     # nice zsh plugins
+    oh-my-zsh # nice zsh plugins
     python3
     pre-commit
     sbt
@@ -59,7 +59,7 @@ in {
     gnupg
     zsh-autosuggestions
     zsh-syntax-highlighting
-    silver-searcher    # ag command, grep -r on steroids
+    silver-searcher # ag command, grep -r on steroids
   ];
 
   home.file.".iterm2_shell_integration.zsh".source =
@@ -163,7 +163,7 @@ in {
       EDITOR = "vim";
       VISUAL = "vim";
       GIT_EDITOR = "vim";
-      HOME_MANAGER_CONFIG = "/Users/kevinoriordan/.config/nixpkgs/home.nix";
+      HOME_MANAGER_CONFIG = "/Users/${username}/.config/nixpkgs/home.nix";
     };
     # Need this for gpg-agent init
     initExtraBeforeCompInit = builtins.readFile ./home/pre-compinit.zsh;
@@ -180,6 +180,22 @@ in {
     enable = true;
     enableZshIntegration = true;
     enableNixDirenvIntegration = true;
+  };
+
+  programs.ssh = {
+    enable = true;
+    matchBlocks."172.16.*" = {
+      extraOptions = {
+        ProxyCommand =
+          "/usr/bin/ssh ubuntu@${username}.bastion.dev.earnestresearch.com /bin/nc %h %p";
+      };
+    };
+    matchBlocks."10.2.*" = {
+      extraOptions = {
+        ProxyCommand =
+          "ProxyCommand /usr/bin/ssh ubuntu@${username}.bastion.earnestresearch.com /bin/nc %h %p";
+      };
+    };
   };
 
   programs.gpg.enable = true;
