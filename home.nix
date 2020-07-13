@@ -184,6 +184,7 @@ in {
 
   programs.ssh = {
     enable = true;
+    # Configure SSH tunnelling
     matchBlocks."172.16.*" = {
       extraOptions = {
         ProxyCommand =
