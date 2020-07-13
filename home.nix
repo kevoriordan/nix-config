@@ -22,6 +22,7 @@ in {
     starship  # gives you a nicer zsh prompt
     bat    # nicer version of cat
     black
+    broot
     dhall
     dhall-json
     fzf    # Needed by zsh-interactive-cd plugin
@@ -75,6 +76,8 @@ in {
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  programs.bat.enable = true;
+  programs.broot.enable = true;
 
   # Git commit signing stuff
   programs.git = {
