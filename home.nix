@@ -144,10 +144,8 @@ in {
       gs = "git status";
       gc = "git commit";
       gl = "git log";
-      ga = "git add";
       gb = "git checkout";
-      p = "git pull";
-      push = "git push";
+      pull = "git pull";
       okta = "okta-aws-login -p development -p production --user koriordan";
       devaws = "export AWS_PROFILE=development";
       prodaws = "export AWS_PROFILE=production";
