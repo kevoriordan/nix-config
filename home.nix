@@ -96,6 +96,7 @@ in {
       credential.helper = "osxkeychain";
       color.ui = true;
     };
+    ignores = [ ".direnv/" ".metals/" ".vscode/" ];
   };
 
   programs.zsh = {
