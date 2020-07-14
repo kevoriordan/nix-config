@@ -183,6 +183,15 @@ in {
 
   programs.ssh = {
     enable = true;
+    matchBlocks.nix-docker = {
+      hostname = "127.0.0.1";
+      user = "root";
+      port = 3022;
+      identityFile = "/etc/nix/docker_rsa";
+      extraOptions={
+        StrictHostKeyChecking="no";
+      };
+    };
     # Configure SSH tunnelling
     matchBlocks."172.16.*" = {
       extraOptions = {
