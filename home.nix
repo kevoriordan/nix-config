@@ -43,6 +43,7 @@ in {
     cabal2nix
     erNix.stack
     erNix.hlint
+    coreutils
     curl
     ghc
     ghcide.ghcide-ghc883
