@@ -42,6 +42,7 @@ in {
     cabal-install
     cabal2nix
     erNix.stack
+    erNix.hlint
     curl
     ghc
     ghcide.ghcide-ghc883
