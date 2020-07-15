@@ -41,6 +41,7 @@ in {
     aws-iam-authenticator
     cabal-install
     cabal2nix
+    erNix.stack
     curl
     ghc
     ghcide.ghcide-ghc883
