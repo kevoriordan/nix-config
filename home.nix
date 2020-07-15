@@ -60,6 +60,7 @@ in {
     cachix
     nix-direnv
     gnupg
+    wget
     zsh-autosuggestions
     zsh-syntax-highlighting
     silver-searcher # ag command, grep -r on steroids
