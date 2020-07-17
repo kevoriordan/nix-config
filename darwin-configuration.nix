@@ -26,7 +26,7 @@ in {
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages = with pkgs; [ source-code-pro python ];
+  environment.systemPackages = with pkgs; [ source-code-pro python mariadb ];
 
   fonts.enableFontDir = true;
   # Source code pro is needed by Spacemacs
@@ -34,6 +34,8 @@ in {
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
   # environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
+
+  networking.hostname = "KevinMacbookPro";
 
   programs.nix-index.enable = true;
   nix.package = pkgs.nix;

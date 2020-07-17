@@ -4,8 +4,6 @@ let
   erNixUrl =
     "https://github.com/EarnestResearch/er-nix/archive/5cee1a6f0bd707785924dcb4fb427c7bcd3e1765.tar.gz";
   erNix = (import (builtins.fetchTarball erNixUrl)).pkgs;
-  ghcide = (import (builtins.fetchTarball
-    "https://github.com/cachix/ghcide-nix/tarball/master") { });
   cfg = config.home-manager.users.${username};
   xdgConfigHomeRelativePath = ".config";
   xdgDataHomeRelativePath = ".local/share";
@@ -46,7 +44,6 @@ in {
     coreutils
     curl
     ghc
-    ghcide.ghcide-ghc883
     gettext
     go
     nix-prefetch-git
@@ -100,7 +97,7 @@ in {
       credential.helper = "osxkeychain";
       color.ui = true;
     };
-    ignores = [ ".direnv/" ".metals/" ".vscode/" ];
+    ignores = [ ".direnv/" ".metals/" ".vscode/" "live/application/shared/configs/application.ini" ];
   };
 
   programs.zsh = {
