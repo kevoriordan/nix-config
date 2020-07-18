@@ -49,6 +49,7 @@ in
     nix-prefetch-git
     oh-my-zsh # nice zsh plugins
     python3
+    python3Packages.pip
     pre-commit
     sbt
     stylish-haskell
