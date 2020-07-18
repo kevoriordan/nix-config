@@ -26,7 +26,7 @@ in
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages = with pkgs; [ source-code-pro python mariadb ];
+  environment.systemPackages = with pkgs; [ source-code-pro mariadb ];
 
   fonts.enableFontDir = true;
   # Source code pro is needed by Spacemacs
