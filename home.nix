@@ -27,7 +27,7 @@ in {
     getopt
     git
     emacs
-    nixfmt
+    nixpkgs-fmt
     pinentry_mac # For yubikey
     postgresql
     gitAndTools.gh
