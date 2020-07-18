@@ -38,7 +38,6 @@ in
   networking.hostName = "KevinMacbookPro";
 
   programs.nix-index.enable = true;
-  nix.package = pkgs.nix;
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
 
@@ -52,58 +51,68 @@ in
 
   # You should generally set this to the total number of logical cores in your system.
   # $ sysctl -n hw.ncpu
-  nix.maxJobs = 8;
-  nix.buildCores = 1;
-  nix.trustedUsers = [ "@root" username ];
+  nix = {
+    package = pkgs.nix;
 
-  nix.distributedBuilds = true;
-  nix.buildMachines = [{
-    hostName = "nix-docker";
-    sshUser = "root";
-    sshKey = "/etc/nix/docker_rsa";
-    systems = [ "x86_64-linux" ];
-    maxJobs = 6;
-    buildCores = 6;
-  }];
+    maxJobs = 8;
+    buildCores = 1;
+    trustedUsers = [ "@root" username ];
+    distributedBuilds = true;
+    buildMachines = [{
+      hostName = "nix-docker";
+      sshUser = "root";
+      sshKey = "/etc/nix/docker_rsa";
+      systems = [ "x86_64-linux" ];
+      maxJobs = 6;
+      buildCores = 6;
+    }];
 
-  nix.binaryCaches = [
-    "https://cache.nixos.org"
-    "https://cache.dhall-lang.org"
-    "https://static-haskell-nix.cachix.org"
-    "https://nix-tools.cachix.org"
-    "https://all-hies.cachix.org"
-    "https://earnestresearch-public.cachix.org"
-    "https://earnestresearch-private.cachix.org"
-    "https://iohk.cachix.org"
-    "https://hercules-ci.cachix.org"
-    "https://ghcide-nix.cachix.org"
-  ];
 
-  nix.binaryCachePublicKeys = [
-    "cache.dhall-lang.org:I9/H18WHd60olG5GsIjolp7CtepSgJmM2CsO813VTmM="
-    "static-haskell-nix.cachix.org-1:Q17HawmAwaM1/BfIxaEDKAxwTOyRVhPG5Ji9K3+FvUU="
-    "nix-tools.cachix.org-1:ebBEBZLogLxcCvipq2MTvuHlP7ZRdkazFSQsbs0Px1A="
-    "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-    "all-hies.cachix.org-1:JjrzAOEUsD9ZMt8fdFbzo3jNAyEWlPAwdVuHw4RD43k="
-    "earnestresearch-public.cachix.org-1:eX0tpfc0sCJOdMQrnIUuh1jzzbpED7WIj7GVRxiCkio="
-    "earnestresearch-private.cachix.org-1:zD6+/1y6BmLQDgnf5TI0q09cRTxDYYcs9dsh1z3BMa4="
-    "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
-    "hercules-ci.cachix.org-1:ZZeDl9Va+xe9j+KqdzoBZMFJHVQ42Uu/c/1/KMC5Lw0="
-    "ghcide-nix.cachix.org-1:ibAY5FD+XWLzbLr8fxK6n8fL9zZe7jS+gYeyxyWYK5c="
-  ];
+    binaryCaches = [
+      "https://cache.nixos.org"
+      "https://cache.dhall-lang.org"
+      "https://static-haskell-nix.cachix.org"
+      "https://nix-tools.cachix.org"
+      "https://all-hies.cachix.org"
+      "https://earnestresearch-public.cachix.org"
+      "https://earnestresearch-private.cachix.org"
+      "https://iohk.cachix.org"
+      "https://hercules-ci.cachix.org"
+      "https://ghcide-nix.cachix.org"
+      "https://nix-community.cachix.org"
+    ];
+
+    binaryCachePublicKeys = [
+      "cache.dhall-lang.org:I9/H18WHd60olG5GsIjolp7CtepSgJmM2CsO813VTmM="
+      "static-haskell-nix.cachix.org-1:Q17HawmAwaM1/BfIxaEDKAxwTOyRVhPG5Ji9K3+FvUU="
+      "nix-tools.cachix.org-1:ebBEBZLogLxcCvipq2MTvuHlP7ZRdkazFSQsbs0Px1A="
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "all-hies.cachix.org-1:JjrzAOEUsD9ZMt8fdFbzo3jNAyEWlPAwdVuHw4RD43k="
+      "earnestresearch-public.cachix.org-1:eX0tpfc0sCJOdMQrnIUuh1jzzbpED7WIj7GVRxiCkio="
+      "earnestresearch-private.cachix.org-1:zD6+/1y6BmLQDgnf5TI0q09cRTxDYYcs9dsh1z3BMa4="
+      "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
+      "hercules-ci.cachix.org-1:ZZeDl9Va+xe9j+KqdzoBZMFJHVQ42Uu/c/1/KMC5Lw0="
+      "ghcide-nix.cachix.org-1:ibAY5FD+XWLzbLr8fxK6n8fL9zZe7jS+gYeyxyWYK5c="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+    extraOptions = ''
+      keep-outputs = true
+      keep-derivations = true
+    '';
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 7d";
+    };
+    nixPath = [
+      "darwin-config=$HOME/.nixpkgs/darwin-configuration.nix"
+      "darwin=$HOME/.nix-defexpr/channels/darwin"
+      "$HOME/.nix-defexpr/channels"
+    ];
+  };
 
   nixpkgs.config.allowUnfree = true;
 
-  nix.extraOptions = ''
-    keep-outputs = true
-    keep-derivations = true
-  '';
 
-  nix.nixPath = [
-    "darwin-config=$HOME/.nixpkgs/darwin-configuration.nix"
-    "darwin=$HOME/.nix-defexpr/channels/darwin"
-    "$HOME/.nix-defexpr/channels"
-  ];
 
   system.defaults.NSGlobalDomain.AppleKeyboardUIMode = 3;
   system.defaults.NSGlobalDomain.ApplePressAndHoldEnabled = false;
