@@ -1,10 +1,10 @@
 { config, pkgs, lib, ... }:
-
 let
   username = builtins.getEnv "USER";
   homeDir = "/Users/${username}";
 
-in {
+in
+{
 
   imports = [ <home-manager/nix-darwin> ];
 

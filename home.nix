@@ -1,5 +1,4 @@
 { config, pkgs, username, homeDir, ... }:
-
 let
   erNixUrl =
     "https://github.com/EarnestResearch/er-nix/archive/5cee1a6f0bd707785924dcb4fb427c7bcd3e1765.tar.gz";
@@ -13,7 +12,8 @@ let
   xdgDataHome = "${homeDir}/${xdgDataHomeRelativePath}";
   xdgCacheHome = "${homeDir}/${xdgCacheHomeRelativePath}";
 
-in {
+in
+{
   home.packages = with pkgs; [
     erNix.okta-aws-login
     awscli
@@ -189,8 +189,8 @@ in {
       user = "root";
       port = 3022;
       identityFile = "/etc/nix/docker_rsa";
-      extraOptions={
-        StrictHostKeyChecking="no";
+      extraOptions = {
+        StrictHostKeyChecking = "no";
       };
     };
     # Configure SSH tunnelling
