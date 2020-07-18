@@ -35,7 +35,7 @@ in
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
   # environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
 
-  networking.hostname = "KevinMacbookPro";
+  networking.hostName = "KevinMacbookPro";
 
   programs.nix-index.enable = true;
   nix.package = pkgs.nix;
