@@ -23,6 +23,7 @@ in
     broot
     dhall
     dhall-json
+    dos2unix
     fzf # Needed by zsh-interactive-cd plugin
     getopt
     git
@@ -204,7 +205,7 @@ in
     matchBlocks."10.2.*" = {
       extraOptions = {
         ProxyCommand =
-          "ProxyCommand /usr/bin/ssh ubuntu@${username}.bastion.earnestresearch.com /bin/nc %h %p";
+          "/usr/bin/ssh ubuntu@${username}.bastion.earnestresearch.com /bin/nc %h %p";
       };
     };
   };
