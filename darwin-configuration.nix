@@ -30,7 +30,8 @@ in
 
   fonts.enableFontDir = true;
   # Source code pro is needed by Spacemacs
-  fonts.fonts = with pkgs; [ source-code-pro ];
+  # powerline-fonts needed by zsh agnoster theme
+  fonts.fonts = with pkgs; [ source-code-pro powerline-fonts ];
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
   # environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
