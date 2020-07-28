@@ -24,6 +24,7 @@ in
     dhall
     dhall-json
     dos2unix
+    fd # nicer version of find command 
     fzf # Needed by zsh-interactive-cd plugin
     getopt
     git
