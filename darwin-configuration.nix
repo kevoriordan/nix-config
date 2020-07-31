@@ -2,6 +2,7 @@
 let
   username = builtins.getEnv "USER";
   homeDir = "/Users/${username}";
+  inherit (pkgs) lorri;
 
 in
 {
@@ -26,7 +27,7 @@ in
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages = with pkgs; [ source-code-pro mariadb ];
+  environment.systemPackages = with pkgs; [ lorri source-code-pro ];
 
   fonts.enableFontDir = true;
   # Source code pro is needed by Spacemacs
@@ -142,5 +143,24 @@ in
   system.defaults.finder.FXEnableExtensionChangeWarning = false;
   # Show full POSIX path in Finder window title
   system.defaults.finder._FXShowPosixPathInTitle = true;
+
+  # Lorri watches for changes in nix config to speed up direnv reloading
+  # XXX: Copied verbatim from https://github.com/iknow/nix-channel/blob/7bf3584e0bef531836050b60a9bbd29024a1af81/darwin-modules/lorri.nix
+  launchd.user.agents = {
+    "lorri" = {
+      serviceConfig = {
+        WorkingDirectory = (builtins.getEnv "HOME");
+        EnvironmentVariables = { };
+        KeepAlive = true;
+        RunAtLoad = true;
+        StandardOutPath = "/var/tmp/lorri.log";
+        StandardErrorPath = "/var/tmp/lorri.log";
+      };
+      script = ''
+        source ${config.system.build.setEnvironment}
+        exec ${lorri}/bin/lorri daemon
+      '';
+    };
+  };
 
 }
