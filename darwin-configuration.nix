@@ -45,6 +45,7 @@ in
 
   services.activate-system.enable = true;
 
+  # Don't want Spotlight trying to index /nix dir
   system.activationScripts.postActivation.text = ''
     printf "disabling spotlight indexing... "
     mdutil -i off -d / &> /dev/null
