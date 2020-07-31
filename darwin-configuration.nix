@@ -43,6 +43,15 @@ in
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
 
+  services.activate-system.enable = true;
+
+  system.activationScripts.postActivation.text = ''
+    printf "disabling spotlight indexing... "
+    mdutil -i off -d / &> /dev/null
+    mdutil -E / &> /dev/null
+    echo "ok"
+  '';
+
   # Create /etc/bashrc that loads the nix-darwin environment.
   programs.zsh.enable = true; # default shell on catalina
   # programs.fish.enable = true;
