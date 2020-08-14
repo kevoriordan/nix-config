@@ -112,8 +112,8 @@ in
       keep-derivations = true
     '';
     gc = {
-      automatic = true;
-      options = "--delete-older-than 7d";
+      automatic = false;
+      options = "--delete-older-than 14d";
     };
     nixPath = [
       "darwin-config=$HOME/.nixpkgs/darwin-configuration.nix"
