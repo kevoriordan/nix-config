@@ -52,8 +52,10 @@ in
     oh-my-zsh # nice zsh plugins
     python3
     python3Packages.pip
+    python3Packages.pylint
     pre-commit
     sbt
+    skopeo
     stylish-haskell
     telnet
     direnv
