@@ -94,6 +94,19 @@ in
       "https://nix-community.cachix.org"
     ];
 
+    trustedBinaryCaches = [
+      "https://cache.nixos.org"
+      "https://cache.dhall-lang.org"
+      "https://static-haskell-nix.cachix.org"
+      "https://nix-tools.cachix.org"
+      "https://all-hies.cachix.org"
+      "https://earnestresearch-public.cachix.org"
+      "https://earnestresearch-private.cachix.org"
+      "https://iohk.cachix.org"
+      "https://hercules-ci.cachix.org"
+      "https://ghcide-nix.cachix.org"
+      "https://nix-community.cachix.org"
+    ];
     binaryCachePublicKeys = [
       "cache.dhall-lang.org:I9/H18WHd60olG5GsIjolp7CtepSgJmM2CsO813VTmM="
       "static-haskell-nix.cachix.org-1:Q17HawmAwaM1/BfIxaEDKAxwTOyRVhPG5Ji9K3+FvUU="
