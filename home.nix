@@ -55,6 +55,7 @@ in
     python3Packages.pylint
     pre-commit
     sbt
+    scala
     skopeo
     stylish-haskell
     telnet
@@ -184,7 +185,6 @@ in
   programs.direnv = {
     enable = true;
     enableZshIntegration = true;
-    enableNixDirenvIntegration = true;
   };
 
   programs.ssh = {
@@ -230,7 +230,7 @@ in
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "20.03";
+  home.stateVersion = "20.09";
 
   # I prefer Neovim to traditional Vim
   programs.neovim = {
