@@ -1,8 +1,8 @@
 { config, pkgs, username, homeDir, ... }:
 let
   erNixUrl =
-    "https://github.com/EarnestResearch/er-nix/archive/5cee1a6f0bd707785924dcb4fb427c7bcd3e1765.tar.gz";
-  erNix = (import (builtins.fetchTarball erNixUrl)).pkgs;
+    "https://github.com/EarnestResearch/er-nix/archive/d8d129d099c9587eb30ec7554fff1a293bf02703.tar.gz";
+  erNix = import (builtins.fetchTarball erNixUrl);
   cfg = config.home-manager.users.${username};
   xdgConfigHomeRelativePath = ".config";
   xdgDataHomeRelativePath = ".local/share";
@@ -15,7 +15,7 @@ let
 in
 {
   home.packages = with pkgs; [
-    erNix.okta-aws-login
+    erNix.pkgs.okta-aws-login
     awscli
     starship # gives you a nicer zsh prompt
     bat # nicer version of cat
@@ -28,9 +28,11 @@ in
     fzf # Needed by zsh-interactive-cd plugin
     getopt
     git
+    google-cloud-sdk
     emacs
     nixpkgs-fmt
     pinentry_mac # For yubikey
+    postgresql.lib
     postgresql
     gitAndTools.gh
     kubectx
@@ -41,8 +43,8 @@ in
     aws-iam-authenticator
     cabal-install
     cabal2nix
-    erNix.stack
-    erNix.hlint
+    erNix.pkgs.stack
+    erNix.pkgs.hlint
     coreutils
     curl
     ghc
@@ -67,7 +69,7 @@ in
     zsh-autosuggestions
     zsh-syntax-highlighting
     silver-searcher # ag command, grep -r on steroids
-  ];
+  ] ++ builtins.attrValues erNix.tools.haskell-language-servers;
 
   home.file.".iterm2_shell_integration.zsh".source =
     ./home/.iterm2_shell_integration.zsh;

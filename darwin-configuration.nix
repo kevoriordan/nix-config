@@ -50,7 +50,7 @@ in
     printf "disabling spotlight indexing... "
     mdutil -i off -d / &> /dev/null
     mdutil -E / &> /dev/null
-    echo "ok"
+    echo "ok"d
   '';
 
   # Create /etc/bashrc that loads the nix-darwin environment.
@@ -70,14 +70,16 @@ in
     buildCores = 1;
     trustedUsers = [ "@root" username ];
     distributedBuilds = true;
-    buildMachines = [{
-      hostName = "nix-docker";
-      sshUser = "root";
-      sshKey = "/etc/nix/docker_rsa";
-      systems = [ "x86_64-linux" ];
-      maxJobs = 6;
-      buildCores = 6;
-    }];
+    buildMachines = [
+      {
+        hostName = "nix-docker";
+        sshUser = "root";
+        sshKey = "/etc/nix/docker_rsa";
+        systems = [ "x86_64-linux" ];
+        maxJobs = 6;
+        buildCores = 6;
+      }
+    ];
 
 
     binaryCaches = [
@@ -173,7 +175,7 @@ in
     "lorri" = {
       serviceConfig = {
         WorkingDirectory = (builtins.getEnv "HOME");
-        EnvironmentVariables = { };
+        EnvironmentVariables = {};
         KeepAlive = true;
         RunAtLoad = true;
         StandardOutPath = "/var/tmp/lorri.log";
