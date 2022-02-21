@@ -1,8 +1,5 @@
-{ config, pkgs, username, homeDir, ... }:
+{ config, pkgs, rosettaPkgs, username, homeDir, ... }:
 let
-  erNixUrl =
-    "https://github.com/EarnestResearch/er-nix/archive/36e2e34aa50f6d05b36918126f104a331534eea1.tar.gz";
-  erNix = import (builtins.fetchTarball erNixUrl);
   cfg = config.home-manager.users.${username};
   xdgConfigHomeRelativePath = ".config";
   xdgDataHomeRelativePath = ".local/share";
@@ -15,9 +12,7 @@ let
 in
 {
   home.packages = with pkgs; [
-    erNix.pkgs.okta-aws-login
     awscli
-    ammonite
     starship # gives you a nicer zsh prompt
     bat # nicer version of cat
     black
@@ -35,7 +30,6 @@ in
     nixpkgs-fmt
     niv
     nodejs
-    pinentry_mac # For yubikey
     postgresql_13.lib
     procs
     gitAndTools.gh
@@ -43,9 +37,7 @@ in
     curl
     aws-iam-authenticator
     cabal-install
-    cabal2nix
-    erNix.pkgs.stack
-    erNix.pkgs.hlint
+   # rosettaPkgs.cabal2nix
     coreutils
     curl
     gettext
@@ -92,11 +84,6 @@ in
     enable = true;
     userName = "Kevin O'Riordan";
     userEmail = builtins.readFile ./local/userEmail.txt;
-    signing = {
-      key = builtins.readFile ./local/signingKey.txt;
-      signByDefault = true;
-      gpgPath = "gpg";
-    };
     extraConfig = {
       push.default = "current";
       pull.rebase = true;
@@ -174,7 +161,6 @@ in
       GIT_EDITOR = "vim";
       HOME_MANAGER_CONFIG = "/Users/${username}/.config/nixpkgs/home.nix";
     };
-    # Need this for gpg-agent init
     initExtraBeforeCompInit = builtins.readFile ./home/pre-compinit.zsh;
   };
 
@@ -215,15 +201,6 @@ in
       };
     };
   };
-
-  programs.gpg.enable = true;
-
-  home.file.".gnupg/gpg-agent.conf".text = ''
-    pinentry-program ${pkgs.pinentry_mac}/Applications/pinentry-mac.app/Contents/MacOS/pinentry-mac
-    enable-ssh-support
-    default-cache-ttl 60
-    max-cache-ttl 120
-  '';
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

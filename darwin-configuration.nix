@@ -2,7 +2,9 @@
 let
   username = builtins.getEnv "USER";
   homeDir = "/Users/${username}";
-  inherit (pkgs) lorri;
+  rosettaPkgs = import <nixpkgs> { 
+    localSystem = "x86_64-darwin";
+   };
 
 in
 {
@@ -22,6 +24,7 @@ in
   home-manager.users.${username} = import ./home.nix {
     inherit config;
     inherit pkgs;
+    inherit rosettaPkgs;
     inherit lib;
     inherit username;
     inherit homeDir;
@@ -29,7 +32,7 @@ in
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages = with pkgs; [ lorri source-code-pro ];
+  environment.systemPackages = with pkgs; [ source-code-pro ];
 
   fonts.enableFontDir = true;
   # Source code pro is needed by Spacemacs
@@ -39,7 +42,7 @@ in
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
   # environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
 
-  networking.hostName = "KevinMacbookPro";
+  networking.hostName = "KevinMacbookPro2";
 
   programs.nix-index.enable = true;
   # Auto upgrade nix package and the daemon service.
@@ -47,7 +50,7 @@ in
 
   services.activate-system.enable = true;
 
-  services.postgresql.enable = true;
+  services.postgresql.enable = false;
 
   # Don't want Spotlight trying to index /nix dir
   system.activationScripts.postActivation.text = ''
@@ -129,6 +132,8 @@ in
     extraOptions = ''
       keep-outputs = true
       keep-derivations = true
+      extra-platforms = x86_64-darwin aarch64-darwin
+      system = x86_64-darwin
     '';
     gc = {
       automatic = false;
@@ -173,23 +178,5 @@ in
   # Show full POSIX path in Finder window title
   system.defaults.finder._FXShowPosixPathInTitle = true;
 
-  # Lorri watches for changes in nix config to speed up direnv reloading
-  # XXX: Copied verbatim from https://github.com/iknow/nix-channel/blob/7bf3584e0bef531836050b60a9bbd29024a1af81/darwin-modules/lorri.nix
-  launchd.user.agents = {
-    "lorri" = {
-      serviceConfig = {
-        WorkingDirectory = (builtins.getEnv "HOME");
-        EnvironmentVariables = {};
-        KeepAlive = true;
-        RunAtLoad = true;
-        StandardOutPath = "/var/tmp/lorri.log";
-        StandardErrorPath = "/var/tmp/lorri.log";
-      };
-      script = ''
-        source ${config.system.build.setEnvironment}
-        exec ${lorri}/bin/lorri daemon
-      '';
-    };
-  };
 
 }
