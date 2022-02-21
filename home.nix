@@ -84,6 +84,11 @@ in
     enable = true;
     userName = "Kevin O'Riordan";
     userEmail = builtins.readFile ./local/userEmail.txt;
+    signing = {
+      key = builtins.readFile ./local/signingKey.txt;
+      signByDefault = true;
+      gpgPath = "gpg";
+    };
     extraConfig = {
       push.default = "current";
       pull.rebase = true;
