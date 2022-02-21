@@ -1,7 +1,7 @@
 { config, pkgs, username, homeDir, ... }:
 let
   erNixUrl =
-    "https://github.com/EarnestResearch/er-nix/archive/d8d129d099c9587eb30ec7554fff1a293bf02703.tar.gz";
+    "https://github.com/EarnestResearch/er-nix/archive/36e2e34aa50f6d05b36918126f104a331534eea1.tar.gz";
   erNix = import (builtins.fetchTarball erNixUrl);
   cfg = config.home-manager.users.${username};
   xdgConfigHomeRelativePath = ".config";
@@ -17,6 +17,7 @@ in
   home.packages = with pkgs; [
     erNix.pkgs.okta-aws-login
     awscli
+    ammonite
     starship # gives you a nicer zsh prompt
     bat # nicer version of cat
     black
@@ -24,20 +25,20 @@ in
     dhall
     dhall-json
     dos2unix
+    exa
     fd # nicer version of find command 
     fzf # Needed by zsh-interactive-cd plugin
     getopt
     git
-    google-cloud-sdk
     emacs
+    gnumake
     nixpkgs-fmt
+    niv
+    nodejs
     pinentry_mac # For yubikey
-    postgresql.lib
-    postgresql
+    postgresql_13.lib
+    procs
     gitAndTools.gh
-    kubectx
-    kubectl
-    eksctl
     jq
     curl
     aws-iam-authenticator
@@ -47,17 +48,14 @@ in
     erNix.pkgs.hlint
     coreutils
     curl
-    ghc
     gettext
     go
     nix-prefetch-git
     oh-my-zsh # nice zsh plugins
-    python3
-    python3Packages.pip
-    python3Packages.pylint
     pre-commit
     sbt
     scala
+    scala-cli
     skopeo
     stylish-haskell
     telnet
@@ -65,11 +63,12 @@ in
     cachix
     nix-direnv
     gnupg
+    bottom
     wget
     zsh-autosuggestions
     zsh-syntax-highlighting
     silver-searcher # ag command, grep -r on steroids
-  ] ++ builtins.attrValues erNix.tools.haskell-language-servers;
+  ];
 
   home.file.".iterm2_shell_integration.zsh".source =
     ./home/.iterm2_shell_integration.zsh;
@@ -104,6 +103,7 @@ in
       core.editor = "vim";
       credential.helper = "osxkeychain";
       color.ui = true;
+      ssh.postBuffer = 524288000;
     };
     ignores = [ ".direnv/" ".metals/" ".vscode/" "live/application/shared/configs/application.ini" ];
   };
@@ -140,6 +140,7 @@ in
         "git"
         "aws"
         "docker"
+        "gcloud"
         "kubectl"
         "cabal"
         "stack"
@@ -188,11 +189,11 @@ in
     enable = true;
     enableZshIntegration = true;
   };
-
+  
   programs.ssh = {
     enable = true;
     matchBlocks.nix-docker = {
-      hostname = "127.0.0.1";
+      hostname = "nix-docker";
       user = "root";
       port = 3022;
       identityFile = "/etc/nix/docker_rsa";
@@ -232,7 +233,7 @@ in
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "20.09";
+  home.stateVersion = "21.05";
 
   # I prefer Neovim to traditional Vim
   programs.neovim = {

@@ -17,6 +17,8 @@ in
     shell = pkgs.zsh;
   };
 
+  users.nix.configureBuildUsers = true;
+
   home-manager.users.${username} = import ./home.nix {
     inherit config;
     inherit pkgs;
@@ -44,6 +46,8 @@ in
   services.nix-daemon.enable = true;
 
   services.activate-system.enable = true;
+
+  services.postgresql.enable = true;
 
   # Don't want Spotlight trying to index /nix dir
   system.activationScripts.postActivation.text = ''
@@ -84,7 +88,6 @@ in
 
     binaryCaches = [
       "https://cache.nixos.org"
-      "https://cache.dhall-lang.org"
       "https://static-haskell-nix.cachix.org"
       "https://nix-tools.cachix.org"
       "https://all-hies.cachix.org"
@@ -92,13 +95,13 @@ in
       "https://earnestresearch-private.cachix.org"
       "https://iohk.cachix.org"
       "https://hercules-ci.cachix.org"
-      "https://ghcide-nix.cachix.org"
       "https://nix-community.cachix.org"
+      "https://hydra.iohk.io"
+      "https://pre-commit-hooks.cachix.org"
     ];
 
     trustedBinaryCaches = [
       "https://cache.nixos.org"
-      "https://cache.dhall-lang.org"
       "https://static-haskell-nix.cachix.org"
       "https://nix-tools.cachix.org"
       "https://all-hies.cachix.org"
@@ -106,11 +109,11 @@ in
       "https://earnestresearch-private.cachix.org"
       "https://iohk.cachix.org"
       "https://hercules-ci.cachix.org"
-      "https://ghcide-nix.cachix.org"
       "https://nix-community.cachix.org"
+      "https://hydra.iohk.io"
+      "https://pre-commit-hooks.cachix.org"
     ];
     binaryCachePublicKeys = [
-      "cache.dhall-lang.org:I9/H18WHd60olG5GsIjolp7CtepSgJmM2CsO813VTmM="
       "static-haskell-nix.cachix.org-1:Q17HawmAwaM1/BfIxaEDKAxwTOyRVhPG5Ji9K3+FvUU="
       "nix-tools.cachix.org-1:ebBEBZLogLxcCvipq2MTvuHlP7ZRdkazFSQsbs0Px1A="
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
@@ -119,8 +122,9 @@ in
       "earnestresearch-private.cachix.org-1:zD6+/1y6BmLQDgnf5TI0q09cRTxDYYcs9dsh1z3BMa4="
       "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
       "hercules-ci.cachix.org-1:ZZeDl9Va+xe9j+KqdzoBZMFJHVQ42Uu/c/1/KMC5Lw0="
-      "ghcide-nix.cachix.org-1:ibAY5FD+XWLzbLr8fxK6n8fL9zZe7jS+gYeyxyWYK5c="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
+      "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
     ];
     extraOptions = ''
       keep-outputs = true
