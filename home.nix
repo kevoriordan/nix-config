@@ -1,4 +1,4 @@
-{ config, pkgs, rosettaPkgs, username, homeDir, ... }:
+{ config, pkgs, rosettaPkgs, lib, username, homeDir, ... }:
 let
   cfg = config.home-manager.users.${username};
   xdgConfigHomeRelativePath = ".config";
@@ -66,6 +66,7 @@ in
     ./home/.iterm2_shell_integration.zsh;
   home.file."${xdgCacheHome}/oh-my-zsh/.keep".text = "";
   home.file."${xdgConfigHome}/git/.keep".text = "";
+  home.sessionPath = [ "$HOME/google-cloud-sdk/bin" ];
 
   xdg = {
     enable = true;
@@ -112,8 +113,8 @@ in
         src = pkgs.fetchFromGitHub {
           owner = "zsh-users";
           repo = "zsh-autosuggestions";
-          rev = "v0.6.3";
-          sha256 = "1h8h2mz9wpjpymgl2p7pc146c1jgb3dggpvzwm9ln3in336wl95c";
+          rev = "v0.7.0";
+          sha256 = "sha256-1fD9HDIjlscFHekrlejtSM506Czzm4hfr4GrJOOkdJk=";
         };
       }
       {
@@ -121,8 +122,8 @@ in
         src = pkgs.fetchFromGitHub {
           owner = "zsh-users";
           repo = "zsh-syntax-highlighting";
-          rev = "be3882aeb054d01f6667facc31522e82f00b5e94";
-          sha256 = "0w8x5ilpwx90s2s2y56vbzq92ircmrf0l5x8hz4g1nx3qzawv6af";
+          rev = "2cd73fcbde1b47f0952027c0674c32b9f1756a59";
+          sha256 = "sha256-1fD9HDIjlscFHekrlejtSM506Czzm4hfr4GrJOOkdJk=";
         };
       }
     ];
