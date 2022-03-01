@@ -50,7 +50,11 @@ in
 
   services.activate-system.enable = true;
 
-  services.postgresql.enable = false;
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql;
+    dataDir = "${homeDir}/postgresDataDir";
+  };
 
   # Don't want Spotlight trying to index /nix dir
   system.activationScripts.postActivation.text = ''

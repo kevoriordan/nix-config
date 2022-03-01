@@ -27,6 +27,7 @@ in
     git
     emacs
     gnumake
+    hpack
     nixpkgs-fmt
     niv
     nodejs
@@ -49,6 +50,7 @@ in
     scala
     scala-cli
     skopeo
+    stack
     stylish-haskell
     telnet
     direnv
@@ -66,7 +68,13 @@ in
     ./home/.iterm2_shell_integration.zsh;
   home.file."${xdgCacheHome}/oh-my-zsh/.keep".text = "";
   home.file."${xdgConfigHome}/git/.keep".text = "";
-  home.sessionPath = [ "$HOME/google-cloud-sdk/bin" ];
+  home.sessionPath = [ "$HOME/.local/bin" "$HOME/google-cloud-sdk/bin" ];
+  home.activation.postgresFolder = ''
+      if [ ! -d "${homeDir}/postgresDataDir" ]; then
+         mkdir -p "${homeDir}/postgresDataDir"
+         chown -R kevinoriordan:staff "${homeDir}/postgresDataDir"
+      fi
+      '';
 
   xdg = {
     enable = true;
